@@ -12,12 +12,9 @@ from routes.admin_routes import admin_bp
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-app.config["SECRET_KEY"] = os.getenv(
-    "SECRET_KEY",
-    "your_secret_key"
-)
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev_secret_key")
 
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
 app.register_blueprint(question_bp, url_prefix="/api/questions")
@@ -29,9 +26,7 @@ app.register_blueprint(admin_bp, url_prefix="/api/admin")
 
 @app.route("/")
 def home():
-    return {
-        "message": "Security Audit Readiness API Running"
-    }
+    return {"message": "Security Audit Readiness API Running"}
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
