@@ -1,7 +1,0 @@
-Flask
-flask-cors
-reportlab
-psycopg2-binary
-python-dotenv
-
-gunicorn
