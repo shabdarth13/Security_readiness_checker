@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { fetchReports } from "../services/api";
+import {
+  fetchReports,
+  exportPdfReport
+} from "../services/api";
 
 export default function Report() {
   const [reports, setReports] = useState([]);
@@ -19,34 +22,41 @@ export default function Report() {
 
       if (!user || !user.id) {
         setError("User not found. Please login again.");
-        setLoading(false);
         return;
       }
 
       const res = await fetchReports(user.id);
-
       setReports(res.data || []);
+
     } catch (error) {
-      console.log(error);
-      setError("Failed to load reports");
+      console.log(
+        "REPORT ERROR:",
+        error.response?.data || error.message
+      );
+
+      setError(
+        error.response?.data?.error ||
+        "Failed to load reports"
+      );
+
     } finally {
       setLoading(false);
     }
   };
 
   const handlePDFDownload = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user"));
 
-  if (!user || !user.id) {
-    alert("Please login again");
-    return;
-  }
+    if (!user || !user.id) {
+      alert("Please login again");
+      return;
+    }
 
-  window.open(
-    `http://127.0.0.1:5000/api/pdf/export/${user.id}`,
-    "_blank"
-  );
-};
+    window.open(
+      exportPdfReport(user.id),
+      "_blank"
+    );
+  };
 
   return (
     <div className="cyber-bg">
@@ -60,7 +70,8 @@ export default function Report() {
             </h1>
 
             <p className="cyber-subtitle">
-              Security findings, risk insights, and compliance recommendations
+              Security findings, risk insights,
+              and compliance recommendations
             </p>
           </div>
 
