@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://127.0.0.1:5000/api"
+  baseURL: import.meta.env.VITE_API_URL
 });
 
 
@@ -48,3 +48,5 @@ export const fetchComplianceMapping = (userId) =>
 
 export const fetchUsers = () =>
   API.get("/admin/all-users");
+
+export default API;
