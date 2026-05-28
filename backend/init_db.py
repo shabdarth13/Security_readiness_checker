@@ -3,15 +3,14 @@ from config.db import get_db_connection
 conn = get_db_connection()
 cur = conn.cursor()
 
-cur.execute("""
-SELECT table_name, column_name, data_type
-FROM information_schema.columns
-WHERE table_schema = 'public'
-ORDER BY table_name;
-""")
+with open("../database/schema.sql", "r") as file:
+    sql = file.read()
 
-for row in cur.fetchall():
-    print(row)
+cur.execute(sql)
+
+conn.commit()
 
 cur.close()
 conn.close()
+
+print("Database schema created successfully!")
