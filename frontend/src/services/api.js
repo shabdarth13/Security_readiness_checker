@@ -7,7 +7,9 @@ const API = axios.create({
 export default API;
 
 
-/* AUTH APIs */
+/* =========================
+   AUTH APIs
+========================= */
 
 export const registerUser = (data) =>
   API.post("/auth/register", data);
@@ -16,7 +18,9 @@ export const loginUser = (data) =>
   API.post("/auth/login", data);
 
 
-/* QUESTIONS APIs */
+/* =========================
+   QUESTIONS APIs
+========================= */
 
 export const fetchQuestions = () =>
   API.get("/questions/");
@@ -25,13 +29,17 @@ export const addQuestion = (data) =>
   API.post("/questions/add", data);
 
 
-/* SCORING APIs */
+/* =========================
+   SCORING APIs
+========================= */
 
 export const calculateScore = (data) =>
   API.post("/scoring/calculate", data);
 
 
-/* REPORT APIs */
+/* =========================
+   REPORT APIs
+========================= */
 
 export const generateReport = (data) =>
   API.post("/report/generate", data);
@@ -40,13 +48,25 @@ export const fetchReports = (userId) =>
   API.get(`/report/all/${userId}`);
 
 
-/* COMPLIANCE APIs */
+/* =========================
+   COMPLIANCE APIs
+========================= */
 
-export const mapCompliance = (data) =>
-  API.post("/compliance/map", data);
+export const fetchComplianceMapping = (userId) =>
+  API.get(`/compliance/map/${userId}`);
 
 
-/* ADMIN APIs */
+/* =========================
+   PDF EXPORT APIs
+========================= */
+
+export const exportPdfReport = (userId) =>
+  `${import.meta.env.VITE_API_URL}/pdf/export/${userId}`;
+
+
+/* =========================
+   ADMIN APIs
+========================= */
 
 export const fetchUsers = () =>
   API.get("/admin/all-users");

@@ -12,8 +12,6 @@ def register():
     email = data.get("email")
     password = data.get("password")
 
-    # SECURITY RULE:
-    # Public registration can NEVER create admin accounts.
     role = "user"
 
     if not name or not email or not password:
@@ -50,7 +48,13 @@ def register():
 
     except Exception as e:
         conn.rollback()
+
         print("REGISTER ERROR:", str(e))
+
+        if "duplicate key value" in str(e):
+            return jsonify({
+                "error": "Email already registered"
+            }), 409
 
         return jsonify({
             "error": str(e)
