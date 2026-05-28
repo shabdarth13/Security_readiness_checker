@@ -3,7 +3,7 @@ from db import get_db_connection
 conn = get_db_connection()
 cur = conn.cursor()
 
-with open("database/schema.sql", "r") as file:
+with open("../database/schema.sql", "r") as file:
     sql = file.read()
 
 cur.execute(sql)
