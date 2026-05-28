@@ -6,6 +6,7 @@ const API = axios.create({
 
 export default API;
 
+
 /* AUTH APIs */
 
 export const registerUser = (data) =>
@@ -41,8 +42,8 @@ export const fetchReports = (userId) =>
 
 /* COMPLIANCE APIs */
 
-export const fetchComplianceMapping = (userId) =>
-  API.get(`/compliance/map/${userId}`);
+export const mapCompliance = (data) =>
+  API.post("/compliance/map", data);
 
 
 /* ADMIN APIs */
